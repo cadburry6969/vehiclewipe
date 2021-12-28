@@ -3,8 +3,9 @@
 -- ================================================
 RegisterCommand("vehwipe", function(source, args)
 	local src = source
-    if IsPlayerAceAllowed(src, "command")
-    TriggerClientEvent("vehwipe:client:delallveh", -1)
+    if IsPlayerAceAllowed(src, "command") then
+    	TriggerClientEvent("vehwipe:client:delallveh", -1)
+		end
 end)
 
 -- ================================================
