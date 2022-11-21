@@ -1,9 +1,11 @@
 local function CheckAndDeleteVehicle(vehicle)
     if DoesEntityExist(vehicle) then
-        if (GetVehicleNumberOfPassengers(vehicle) == 0) and IsVehicleSeatFree(Vehicle, -1) then
-            SetVehicleHasBeenOwnedByPlayer(vehicle, false) 
-            SetEntityAsMissionEntity(vehicle, false, false) 
-            DeleteEntity(vehicle)
+        if not IsPedAPlayer(GetPedInVehicleSeat(vehicle, -1)) then
+            if (GetVehicleNumberOfPassengers(vehicle) == 0) then
+                SetVehicleHasBeenOwnedByPlayer(vehicle, false) 
+                SetEntityAsMissionEntity(vehicle, false, false)
+                DeleteEntity(vehicle)
+            end
         end
     end
 end
@@ -26,9 +28,7 @@ end)
 
 RegisterNetEvent("vehiclewipe:delallveh", function ()
     local vehicles = GetGamePool('CVehicle')
-    for i=1, #vehicles, 1 do
-        if (not IsPedAPlayer(GetPedInVehicleSeat(vehicles[i], -1))) then 
-            CheckAndDeleteVehicle(vehicles[i])
-        end
+    for i = 1, #vehicles, 1 do
+        CheckAndDeleteVehicle(vehicles[i])        
     end
 end)
